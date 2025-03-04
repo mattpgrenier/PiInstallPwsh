@@ -28,21 +28,21 @@ release=$(curl -sL https://api.github.com/repos/PowerShell/PowerShell/releases/l
 #Identify the package that matches the OS CPU Architecture
 package=$(echo $release | jq -r ".assets[].browser_download_url" | grep "linux-$architecture.tar.gz")
 
+# Identify the name of the package downloaded
+packagename=$(echo $package | awk -F/ '{print $NF}')
+
 #Download the package
-wget $package
+wget -O $packagename $package
 
 
 ###################################
 # Unpack and install (https://learn.microsoft.com/en-us/powershell/scripting/install/install-other-linux)
 
 #Identify the major version as the first integer after the "v" in the package URL
-majorver=$(echo $package | sed -n 's/.*v\([0-9]\+\)\..*/\1/p')
+majorver=$(echo $packagename | sed -n 's/.*v\([0-9]\+\)\..*/\1/p')
 
 # Create the target folder where powershell will be placed
 sudo mkdir -p /opt/microsoft/powershell/$majorver
-
-# Identify the name of the package downloaded
-packagename=$(echo $package | awk -F/ '{print $NF}')
 
 # Expand the powershell package to the target folder
 sudo tar zxf ./$packagename -C /opt/microsoft/powershell/$majorver
