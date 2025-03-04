@@ -26,13 +26,13 @@ architecture=$(
 release=$(curl -sL https://api.github.com/repos/PowerShell/PowerShell/releases/latest)
 
 #Identify the package that matches the OS CPU Architecture
-package=$(echo $release | jq -r ".assets[].browser_download_url" | grep "linux-$architecture.tar.gz")
+packageuri=$(echo $release | jq -r ".assets[].browser_download_url" | grep "linux-$architecture.tar.gz")
 
 # Identify the name of the package downloaded
-packagename=$(echo $package | awk -F/ '{print $NF}')
+packagename=$(echo $packageuri | awk -F/ '{print $NF}')
 
 #Download the package
-wget -O $packagename $package
+wget -O $packagename $packageuri
 
 
 ###################################
