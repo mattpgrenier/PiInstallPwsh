@@ -41,8 +41,11 @@ majorver=$(echo $package | sed -n 's/.*v\([0-9]\+\)\..*/\1/p')
 # Create the target folder where powershell will be placed
 sudo mkdir -p /opt/microsoft/powershell/$majorver
 
+# Identify the name of the package downloaded
+packagename=$(echo $package | awk -F/ '{print $NF}')
+
 # Expand the powershell package to the target folder
-sudo tar zxf ./powershell.tar.gz -C /opt/microsoft/powershell/$majorver
+sudo tar zxf ./$packagename -C /opt/microsoft/powershell/$majorver
 
 # Set execute permissions
 sudo chmod +x /opt/microsoft/powershell/$majorver/pwsh
