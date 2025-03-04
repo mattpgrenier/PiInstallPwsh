@@ -51,5 +51,5 @@ sudo tar zxf ./$packagename -C /opt/microsoft/powershell/$majorver
 sudo chmod +x /opt/microsoft/powershell/$majorver/pwsh
 
 # Create the symbolic link that points to pwsh
-sudo ln -s /opt/microsoft/powershell/$majorver/pwsh /usr/bin/pwsh
+sudo ln -sf /opt/microsoft/powershell/$majorver/pwsh /usr/bin/pwsh
 
